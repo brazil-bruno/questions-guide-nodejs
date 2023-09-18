@@ -1,9 +1,8 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const conncetion = require("./database/database");
 const connection = require("./database/database");
-const questionModel = require("./database/Question");
+const Question = require("./database/Question");
 
 connection
   .authenticate()
@@ -31,9 +30,12 @@ app.get("/toask", (req, res) => {
 app.post("/savequestion", (req, res) => {
   var title = req.body.title;
   var description = req.body.description;
-  res.send(
-    "Form received! Title: " + title + " " + "Description: " + description
-  );
+  Question.create({
+    title: title,
+    description: description,
+  }).then(() => {
+    res.redirect("/");
+  });
 });
 
 app.listen(8080, () => {
