@@ -42,6 +42,21 @@ app.post("/savequestion", (req, res) => {
   });
 });
 
+app.get("/ask/:id", (req, res) => {
+  var id = req.params.id;
+  Question.findOne({
+    where: { id: id },
+  }).then((ask) => {
+    if (ask != undefined) {
+      res.render("ask", {
+        ask: ask,
+      });
+    } else {
+      res.redirect("/");
+    }
+  });
+});
+
 app.listen(8080, () => {
   console.log("App is running...");
 });
