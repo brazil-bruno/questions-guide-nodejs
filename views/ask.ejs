@@ -2,10 +2,21 @@
 <body>
   <%- include('partials/navbar.ejs') %>
   <div class="container">
-    <hr>
+    <hr />
     <h1><%= ask.title %></h1>
     <p><%= ask.description %></p>
-    <hr>
+    <hr />
+    <form>
+      <h3>Reply</h3>
+      <label>Answer:</label>
+      <textarea
+        placeholder="Enter your answer!"
+        class="form-control"
+        name="bodyAnswer"
+      ></textarea>
+      <br />
+      <button class="btn btn-primary" type="submit">Answer</button>
+    </form>
   </div>
 </body>
 
