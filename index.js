@@ -49,12 +49,29 @@ app.get("/ask/:id", (req, res) => {
     where: { id: id },
   }).then((ask) => {
     if (ask != undefined) {
-      res.render("ask", {
-        ask: ask,
+      Answer.findAll({
+        where: { questionId: ask.id },
+        order: [["id", "DESC"]],
+      }).then((answers) => {
+        res.render("ask", {
+          ask: ask,
+          answers: answers,
+        });
       });
     } else {
       res.redirect("/");
     }
+  });
+});
+
+app.post("/answer", (req, res) => {
+  var bodyAnswer = req.body.bodyAnswer;
+  var questionId = req.body.ask;
+  Answer.create({
+    bodyAnswer: bodyAnswer,
+    questionId: questionId,
+  }).then(() => {
+    res.redirect("/ask/" + questionId);
   });
 });
 
